@@ -5,10 +5,9 @@ import com.deveficiente.desafiocdc.dto.AutorDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/cdc/autor")
@@ -18,11 +17,22 @@ public class AutorController {
     private AutorRepository autorRepository;
 
     @PostMapping
-    public ResponseEntity<AutorDTO> salvar(@RequestBody @Valid AutorDTO dto){
+    @Transactional
+    public ResponseEntity<AutorDTO> salvar(
+            @RequestBody @Valid AutorDTO dto,
+            UriComponentsBuilder uriComponentsBuilder){
         var autor = dto.toModel();
         var autorSalvo = autorRepository.save(autor);
-        return ResponseEntity.ok(new AutorDTO(autorSalvo));
+        var uri = uriComponentsBuilder.path("/api/cdc/autor/{id}").buildAndExpand(autor.getId()).toUri();
+        return ResponseEntity.created(uri).body(new AutorDTO(autorSalvo));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AutorDTO> detalhar(@PathVariable Long id) {
+        var autor = autorRepository.getReferenceById(id);
+        return ResponseEntity.ok(new AutorDTO(autor));
+    }
+
 
 
 }
