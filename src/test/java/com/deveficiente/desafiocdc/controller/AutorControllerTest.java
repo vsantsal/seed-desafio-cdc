@@ -1,6 +1,8 @@
 package com.deveficiente.desafiocdc.controller;
 
+import com.deveficiente.desafiocdc.domain.entity.Autor;
 import com.deveficiente.desafiocdc.domain.repository.AutorRepository;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,9 +17,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -194,5 +197,40 @@ class AutorControllerTest {
                 // Assert
                 .andExpect(status().isBadRequest());
     }
+
+    @DisplayName("Teste de detalhamento de autor para id válido na API")
+    @Test
+    public void testCenario10() throws Exception {
+        // Arrange
+        autorRepository.save(
+                new Autor("Marcel Proust do SQL",
+                        "marcel.proust.sql@cdc.com.br",
+                        "Autor de consultas SQL refinadas"));
+        // Act
+        this.mockMvc.perform(
+                get(ENDPOINT +"/1")
+        )
+        // Assert
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nome",
+                        Matchers.is("Marcel Proust do SQL")))
+                .andExpect(jsonPath("$.email",
+                        Matchers.is("marcel.proust.sql@cdc.com.br")))
+                .andExpect(jsonPath("$.descricao",
+                        Matchers.is("Autor de consultas SQL refinadas")))
+        ;
+
+    }
+
+    @DisplayName("Teste de detalhamento de autor para id inexistente na API")
+    @Test
+    public void testCenario11() throws Exception {
+        // Arrange & Act
+        this.mockMvc.perform(
+                get(ENDPOINT + "/1"))
+            // Assert
+                .andExpect(status().isNotFound());
+    }
+
 
 }
