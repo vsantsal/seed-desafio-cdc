@@ -31,7 +31,7 @@ public class AutorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AutorDTO> detalhar(@PathVariable Long id) {
-        var autor = manager.getReference(Autor.class, 1L);
+        var autor = manager.getReference(Autor.class, id);
         return ResponseEntity.ok(new AutorDTO(autor));
     }
 
