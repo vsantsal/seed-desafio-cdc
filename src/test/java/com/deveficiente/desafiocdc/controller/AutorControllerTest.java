@@ -232,5 +232,30 @@ class AutorControllerTest {
                 .andExpect(status().isNotFound());
     }
 
+    @DisplayName("Teste de cadastro de autor com data de registro não armazena a info")
+    @Test
+    public void testCenario12() throws Exception {
+        // Arrange & Act
+        this.mockMvc.perform(
+                        post(ENDPOINT)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"nome\": \"Marcel Proust do SQL\", " +
+                                                "\"email\": \"marcel.proust.sql@cdc.com.br\", " +
+                                                "\"registro\": \"2023-09-11T11:44:57.545529799\", " +
+                                                "\"descricao\": \"Autor de consultas SQL refinadas\"}"
+                                )
+                )
+                // Assert
+                .andExpect(status().isCreated())
+                .andExpect(header().exists("Location"))
+                .andExpect(header().string("Location", containsString( ENDPOINT+ "/1")))
+                .andExpect(jsonPath("$.nome",
+                        Matchers.is("Marcel Proust do SQL")))
+                .andExpect(jsonPath("$.registro",
+                        Matchers.not("2023-09-11T11:44:57.545529799")))
+        ;
+    }
+
 
 }
