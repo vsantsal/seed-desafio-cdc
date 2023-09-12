@@ -3,6 +3,7 @@ package com.deveficiente.desafiocdc.dto;
 import com.deveficiente.desafiocdc.domain.entity.Autor;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,7 @@ public record AutorDTO(
         String email,
 
         @NotBlank
+                @Size(max = 400)
         String descricao,
 
         LocalDateTime registro

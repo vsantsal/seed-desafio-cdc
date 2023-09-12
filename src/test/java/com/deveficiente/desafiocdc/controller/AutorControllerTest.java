@@ -1,7 +1,6 @@
 package com.deveficiente.desafiocdc.controller;
 
 import com.deveficiente.desafiocdc.domain.entity.Autor;
-import com.deveficiente.desafiocdc.domain.repository.AutorRepository;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,9 +31,6 @@ class AutorControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private AutorRepository autorRepository;
-
     @BeforeEach
     public void setUp(){
 
@@ -42,7 +38,7 @@ class AutorControllerTest {
 
     @AfterEach
     public void tearDown(){
-        autorRepository.deleteAll();
+
     }
 
     @DisplayName("Teste de cadastro de autor com dados válidos")
@@ -202,10 +198,16 @@ class AutorControllerTest {
     @Test
     public void testCenario10() throws Exception {
         // Arrange
-        autorRepository.save(
-                new Autor("Marcel Proust do SQL",
-                        "marcel.proust.sql@cdc.com.br",
-                        "Autor de consultas SQL refinadas"));
+        this.mockMvc.perform(
+                post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                "{\"nome\": \"Marcel Proust do SQL\", " +
+                                        "\"email\": \"marcel.proust.sql@cdc.com.br\", " +
+                                        "\"descricao\": \"Autor de consultas SQL refinadas\"}"
+                        )
+        );
+
         // Act
         this.mockMvc.perform(
                 get(ENDPOINT +"/1")
