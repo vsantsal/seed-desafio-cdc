@@ -1,5 +1,33 @@
-# Faça um fork desse repositório
+Desafio Casa do código
+======================
 
-Este é um repositório vazio de propósito. A ideia é que você faça um fork para que eu, Alberto, possa usar o github para ter a chance de olhar vários dos códigos produzido por você e seus(as) colegas da Jornada Dev Eficiente :). 
+<!-- TOC -->
+* [Desafio Casa do código](#desafio-casa-do-código)
+* [👓 Introdução](#-introdução)
+* [🚀 Desafios](#-desafios)
+    * [Cadastro de um novo autor](#cadastro-de-um-novo-autor)
+* [🗓️ Resumo Desenvolvimento](#-resumo-desenvolvimento)
+<!-- TOC -->
 
-Durante cada uma das seis semanas eu vou pegar código por amostragem e analisar. Feito isso, vou criar um vídeo anonimizando a pessoa que é dona do código, com as minhas observações e postar isso como material de suporte da funcionalidade :). 
+# 👓 Introdução
+
+![Badge Java](https://img.shields.io/static/v1?label=Java&message=17&color=orange&style=for-the-badge&logo=java)
+
+![framework_back](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)
+
+
+Desenvolveremos no repositório implementação para o primeiro desafio da jornada [Dev Eficiente](https://deveficiente.com/), relativo a implementação de loja de livros virtual.
+
+Como *stack*, empregaremos Java e Spring Boot.
+
+# 🚀 Desafios
+
+### Cadastro de um novo autor
+
+Implementaremos inicialmente endpoint para cadastro de novos autores no sistema. As informações pertinentes a um autor são: 
+* [ ] Nome (obrigatório)
+* [ ] Email (obrigatório, em formato válido)
+* [ ] Descrição (obrigatória, não pode passar de 400 caracteres)
+* [ ] Instante de registro (não nulo)
+
+# 🗓️ Resumo Desenvolvimento
