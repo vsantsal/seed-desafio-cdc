@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@NoArgsConstructor
 public class Autor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
