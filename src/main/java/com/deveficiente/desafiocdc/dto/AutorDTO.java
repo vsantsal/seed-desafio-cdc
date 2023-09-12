@@ -4,6 +4,8 @@ import com.deveficiente.desafiocdc.domain.entity.Autor;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.LocalDateTime;
+
 public record AutorDTO(
         @NotBlank
         String nome,
@@ -13,7 +15,9 @@ public record AutorDTO(
         String email,
 
         @NotBlank
-        String descricao
+        String descricao,
+
+        LocalDateTime registro
         ) {
 
     public Autor toModel(){
@@ -21,6 +25,6 @@ public record AutorDTO(
     }
 
     public AutorDTO(Autor autor){
-        this(autor.getNome(), autor.getEmail(), autor.getDescricao());
+        this(autor.getNome(), autor.getEmail(), autor.getDescricao(), autor.getCriadoEm());
     }
 }
