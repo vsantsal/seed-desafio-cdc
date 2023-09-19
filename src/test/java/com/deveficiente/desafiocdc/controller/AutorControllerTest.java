@@ -260,4 +260,37 @@ class AutorControllerTest {
     }
 
 
+    @DisplayName("Teste não é possível cadastrar mesmo e-mail para mais de um autor")
+    @Test
+    public void testCenario13() throws Exception {
+        // Arrange
+        this.mockMvc.perform(
+                        post(ENDPOINT)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"nome\": \"Marcel Proust do SQL\", " +
+                                                "\"email\": \"marcel.proust.sql@cdc.com.br\", " +
+                                                "\"registro\": \"2023-09-11T11:44:57.545529799\", " +
+                                                "\"descricao\": \"Autor de consultas SQL refinadas\"}"
+                                )
+                );
+
+        this.mockMvc.perform(
+                post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                "{\"nome\": \"Marcel Proust do Python\", " +
+                                        "\"email\": \"marcel.proust.sql@cdc.com.br\", " +
+                                        "\"registro\": \"2023-09-13T11:44:57.545529788\", " +
+                                        "\"descricao\": \"Autor de scripts python perdidos\"}"
+                        )
+        )
+
+
+                // Assert
+                // Assert
+                .andExpect(status().isBadRequest());
+    }
+
+
 }
