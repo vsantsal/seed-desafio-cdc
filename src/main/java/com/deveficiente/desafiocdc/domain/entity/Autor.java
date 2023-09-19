@@ -22,6 +22,7 @@ public class Autor {
 
     @NotBlank
     @Email
+    @Column(unique = true)
     private String email;
 
     @NotBlank

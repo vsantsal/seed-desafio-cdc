@@ -1,6 +1,5 @@
 package com.deveficiente.desafiocdc.controller;
 
-import com.deveficiente.desafiocdc.domain.entity.Autor;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -257,6 +256,35 @@ class AutorControllerTest {
                 .andExpect(jsonPath("$.registro",
                         Matchers.not("2023-09-11T11:44:57.545529799")))
         ;
+    }
+
+
+    @DisplayName("Teste não é possível cadastrar mesmo e-mail para mais de um autor")
+    @Test
+    public void testCenario13() throws Exception {
+        // Arrange
+        this.mockMvc.perform(
+                        post(ENDPOINT)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(
+                                        "{\"nome\": \"Marcel Proust do SQL\", " +
+                                                "\"email\": \"marcel.proust.sql@cdc.com.br\", " +
+                                                "\"descricao\": \"Autor de consultas SQL refinadas\"}"
+                                )
+                );
+
+        this.mockMvc.perform(
+                post(ENDPOINT)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                "{\"nome\": \"Marcel Proust do Python\", " +
+                                        "\"email\": \"marcel.proust.sql@cdc.com.br\", " +
+                                        "\"descricao\": \"Autor de scripts python perdidos\"}"
+                        )
+        )
+
+                // Assert
+                .andExpect(status().isConflict());
     }
 
 
