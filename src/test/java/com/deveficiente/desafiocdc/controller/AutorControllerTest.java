@@ -1,6 +1,5 @@
 package com.deveficiente.desafiocdc.controller;
 
-import com.deveficiente.desafiocdc.domain.entity.Autor;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -270,7 +269,6 @@ class AutorControllerTest {
                                 .content(
                                         "{\"nome\": \"Marcel Proust do SQL\", " +
                                                 "\"email\": \"marcel.proust.sql@cdc.com.br\", " +
-                                                "\"registro\": \"2023-09-11T11:44:57.545529799\", " +
                                                 "\"descricao\": \"Autor de consultas SQL refinadas\"}"
                                 )
                 );
@@ -281,15 +279,12 @@ class AutorControllerTest {
                         .content(
                                 "{\"nome\": \"Marcel Proust do Python\", " +
                                         "\"email\": \"marcel.proust.sql@cdc.com.br\", " +
-                                        "\"registro\": \"2023-09-13T11:44:57.545529788\", " +
                                         "\"descricao\": \"Autor de scripts python perdidos\"}"
                         )
         )
 
-
                 // Assert
-                // Assert
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isConflict());
     }
 
 
